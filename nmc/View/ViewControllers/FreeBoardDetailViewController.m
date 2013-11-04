@@ -11,7 +11,9 @@
 #import "ReplyInfoData.h"
 #import "ListInfoData.h"
 
-@interface FreeBoardDetailViewController ()
+@interface FreeBoardDetailViewController () <UIWebViewDelegate>
+
+@property (nonatomic, strong) DetailInfoData* detailInfo;
 
 @end
 
@@ -46,6 +48,11 @@
     
 }
 
+- (void)refreshScreen
+{
+    [self.webView loadHTMLString:self.detailInfo.body baseURL:nil];
+}
+
 - (void)requestDetailView
 {
     ListInfoData* info = (ListInfoData*)self.parameter;
@@ -59,7 +66,8 @@
         int state = [[dic objectForKey:KEY_STATE]intValue];
         
         if (state == RESPONSE_SUCCESS) {
-            DetailInfoData* info = [dic objectForKey:KEY_DETAIL_INFO];
+            self.detailInfo = [dic objectForKey:KEY_DETAIL_INFO];
+            [self refreshScreen];
         } else if (state == RESPONSE_FAIL) {
             NSString* msg = [dic objectForKey:KEY_MESSAGE];
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
@@ -81,6 +89,17 @@
                               nil];
         [alert show];
     }];
+}
+
+#pragma mark - UIWebView Delegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSString* urlString = request.URL.absoluteString;
+    
+    NSLog(@"%@", urlString);
+    
+    return YES;
 }
 
 @end

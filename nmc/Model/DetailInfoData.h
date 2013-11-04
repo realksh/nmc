@@ -20,6 +20,6 @@
 @property (nonatomic, strong) NSString* hits;
 @property (nonatomic, strong) NSString* body;
 @property (nonatomic, strong) NSString* nm_id;
-@property (nonatomic, strong) NSArray* replyList;
+@property (nonatomic, strong) NSMutableArray* replyList;
 
 @end

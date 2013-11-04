@@ -120,7 +120,6 @@
              
              // 성공
              DetailInfoData* info = [HtmlParser parseDetailWithType:type responseString:responseString];
-
              
              
              dic = @{KEY_STATE: @"200",

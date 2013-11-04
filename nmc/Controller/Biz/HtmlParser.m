@@ -86,25 +86,48 @@
     TFHpple* xpathParser = [HtmlParser htmlStringToTFHpple:responseString];
     
     // body
-    NSString* body  = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_text\"]/text()[1]"]objectAtIndex:0]content];
-    NSString* title = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_head1\"]/strong/font[2]/text()"]objectAtIndex:0]content];
-    NSString* date  = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_tail\"]/text()"]objectAtIndex:0]content];
-    NSString* num   = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_head1\"]/text()"]objectAtIndex:0]content];
-    NSString* nm_id = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"fid\"]/text()"]objectAtIndex:0]content];
+    NSArray* arrBody = [xpathParser searchWithXPathQuery:@"//*[@id=\"con_text\"]"];
+    NSString* body = @"";
+    
+    if (0 < arrBody.count) {
+        body  = HTML_BODY_SKIN([[arrBody objectAtIndex:0]raw]);
+    }
+
+//    NSString* title = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_head1\"]/strong/font[2]/text()"]objectAtIndex:0]content];
+//    NSString* date  = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_tail\"]/text()"]objectAtIndex:0]content];
+//    NSString* num   = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_head1\"]/text()"]objectAtIndex:0]content];
+//    NSString* nm_id = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"fid\"]/text()"]objectAtIndex:0]content];
     
     // reply
-    NSArray* arrReplyList = [xpathParser searchWithXPathQuery:@"//table[@class='reply_box']"];
+    /*
+    NSArray* arrReplyElements = [xpathParser searchWithXPathQuery:@"//table[@class='reply_box']"];
     
-    for (TFHppleElement* element in arrReplyList) {
-        NSString* replyBody = @"";
-        NSString* replyNick = @"";
-        NSString* replyNm_id = @"";
-        NSString* replyDate = @"";
+    NSMutableArray* arrReplyList = [NSMutableArray array];
+    
+    for (TFHppleElement* element in arrReplyElements) {
+        NSString* replyBody     = @"";
+        NSString* replyNick     = @"";
+        NSString* replyNm_id    = @"";
+        NSString* replyDate     = @"";
         
         ReplyInfoData* replyInfo = [[ReplyInfoData alloc]init];
+        
+        replyInfo.body = replyBody;
+        replyInfo.nickname = replyNick;
+        replyInfo.nm_id = replyNm_id;
+        replyInfo.date = replyDate;
+        
+        [arrReplyList addObject:replyInfo];
     }
-    
+    */
     DetailInfoData* info = [[DetailInfoData alloc]init];
+    
+    info.body = body;
+//    info.title = title;
+//    info.date = date;
+//    info.num = num;
+//    info.nm_id = nm_id;
+//    info.replyList = arrReplyList;
     
     return info;
 }
