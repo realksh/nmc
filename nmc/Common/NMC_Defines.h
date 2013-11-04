@@ -32,15 +32,15 @@ typedef enum {
 <script type="text/javascript">function resize2(img) {if(img.width >= 300) {img.width = 300;}}</script>
  */
 
-#define LOGIN_ID                            @"LoginID"
-#define LOGIN_PASSWORD                      @"LoginPassword"
-#define HTML_BODY_SKIN(a)                   [NSString stringWithFormat:@"<html><body><script type=\"text/javascript\">function resize2(img){if(img.width >= 300) {img.width = 300;}}</script>%@</body></html>", a]
+#define LOGIN_ID                                @"LoginID"
+#define LOGIN_PASSWORD                          @"LoginPassword"
+#define HTML_BODY_SKIN(a)                       [NSString stringWithFormat:@"<html><body><script type=\"text/javascript\">function resize2(img){if(img.width >= 300) {img.width = 300;}}</script>%@</body></html>", a]
 
 #pragma mark - URL
 
-#define URL_LOGIN                           @"http://nikemania.com/members/login.php"
-#define URL_LIST                            @"http://nikemania.com/bbs/bbs_list.php"
-#define URL_DETAIL                          @"http://nikemania.com/bbs/"
+#define URL_LOGIN                               @"http://nikemania.com/members/login.php"
+#define URL_LIST                                @"http://nikemania.com/bbs/bbs_list.php"
+#define URL_DETAIL                              @"http://nikemania.com/bbs/"
 
 
 #pragma mark - Request Param
