@@ -8,15 +8,30 @@
 
 #import "AppDelegate.h"
 
+#import "RevealController.h"
+#import "FreeBoardListViewController.h"
+#import "RearMenuViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    return YES;
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	self.window = window;
+	
+    
+	FreeBoardListViewController *frontViewController = [[FreeBoardListViewController alloc] init];
+	RearMenuViewController *rearViewController = [[RearMenuViewController alloc] init];
+	
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
+	
+	RevealController *revealController = [[RevealController alloc] initWithFrontViewController:navigationController rearViewController:rearViewController];
+	self.viewController = revealController;
+	
+	self.window.rootViewController = self.viewController;
+	[self.window makeKeyAndVisible];
+	return YES;
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
