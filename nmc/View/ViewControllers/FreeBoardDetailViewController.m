@@ -46,7 +46,6 @@
 - (void)initView
 {
     ListInfoData* info = (ListInfoData*)self.parameter;
-    
     [self.navigationItem setTitle:info.title];
 }
 
@@ -57,12 +56,13 @@
 
 - (void)requestDetailView
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     ListInfoData* info = (ListInfoData*)self.parameter;
     NSString* urlString = [NSString stringWithFormat:@"%@%@", URL_DETAIL, info.url];
     NSDictionary* dic = @{KEY_DETAIL_VIEW_URL:urlString};
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [NetworkAPI requestBoardDetail:dic type:BoardTypeGeneral success:^(NSDictionary *dic) {
-        
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         int state = [[dic objectForKey:KEY_STATE]intValue];
@@ -99,7 +99,13 @@
 {
     NSString* urlString = request.URL.absoluteString;
     
-    NSLog(@"%@", urlString);
+    if (UIWebViewNavigationTypeLinkClicked == navigationType) {
+        if ([urlString hasPrefix:@"http://"]) {
+            // push new webview with image & link
+            
+            return NO;
+        }
+    }
     
     return YES;
 }

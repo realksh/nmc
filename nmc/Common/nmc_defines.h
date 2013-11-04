@@ -52,6 +52,7 @@ typedef enum {
 #define KEY_BOARD                               @"bbs"
 #define KEY_NUMBER_OF_PAGE                      @"page"
 #define KEY_DETAIL_VIEW_URL                     @"detailViewUrl"
+#define KEY_PAGE                                @"page"
 
 
 #pragma mark - Response Param

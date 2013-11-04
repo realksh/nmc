@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* arrList;
 @property (strong, nonatomic) UIRefreshControl* refreshControl;
+@property (assign, nonatomic) NSInteger currentPage;
 
 @end
 
@@ -29,6 +30,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _currentPage = 1;
     }
     return self;
 }
@@ -82,9 +92,10 @@
     }
 }
 
-- (void)requestList
+- (void)requestListWithPage:(NSString*)page
 {
-    NSDictionary* dic = @{KEY_BOARD: @"popbbs3"};
+    NSDictionary* dic = @{KEY_BOARD: @"popbbs3",
+                          KEY_PAGE: page};
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [NetworkAPI requestBoardList:dic type:BoardTypeGeneral success:^(NSDictionary *dic) {
         
@@ -94,7 +105,16 @@
         int state = [[dic objectForKey:KEY_STATE]intValue];
         
         if (state == RESPONSE_SUCCESS) {
-            self.arrList = [dic objectForKey:KEY_LIST];
+            NSArray* array = [dic objectForKey:KEY_LIST];
+            
+            if (!self.arrList) {
+                self.arrList = [NSMutableArray array];
+            }
+            
+            for (ListInfoData* info in array) {
+                [self.arrList addObject:info];
+            }
+            
             [self.tableView reloadData];
         } else if (state == RESPONSE_FAIL) {
             NSString* msg = [dic objectForKey:KEY_MESSAGE];
@@ -123,7 +143,9 @@
 
 - (void)refreshTableView
 {
-    [self requestList];
+    [self.arrList removeAllObjects];
+    self.currentPage = 1;
+    [self requestListWithPage:[NSString stringWithFormat:@"%d", self.currentPage]];
 }
 
 #pragma mark - Table view data source
@@ -145,11 +167,22 @@
     
     NSInteger row = indexPath.row;
     
+    if (row >= self.arrList.count) {
+        return cell;
+    }
+    
     ListInfoData* listData = [self.arrList objectAtIndex:row];
     
     NSString* title = listData.title;
+    NSString* nickname = listData.nickname;
     
     [cell.labelTitle setText:title];
+    [cell.labelName setText:nickname];
+    
+    if (row == self.arrList.count - 1) {
+        self.currentPage++;
+        [self requestListWithPage:[NSString stringWithFormat:@"%d", self.currentPage]];
+    }
     
     return cell;
 }
@@ -174,7 +207,7 @@
 
 - (void)dismissLoginViewController
 {
-    [self requestList];
+    [self refreshTableView];
 }
 
 @end

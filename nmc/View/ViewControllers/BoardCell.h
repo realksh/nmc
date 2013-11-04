@@ -11,5 +11,6 @@
 @interface BoardCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *labelTitle;
+@property (strong, nonatomic) IBOutlet UILabel *labelName;
 
 @end
