@@ -11,13 +11,9 @@
 @interface ReplyInfoData : NSObject
 
 @property (nonatomic, strong) NSString* nickname;
-@property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSString* nm_id;
 @property (nonatomic, strong) NSString* date;
-@property (nonatomic, strong) NSString* num;
-@property (nonatomic, strong) NSString* numberOfReply;
-@property (nonatomic, strong) NSString* platform;
-@property (nonatomic, strong) NSString* url;
-@property (nonatomic, strong) NSString* hits;
 @property (nonatomic, strong) NSString* body;
+@property (nonatomic, strong) NSString* profileImgUrl;
 
 @end

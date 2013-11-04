@@ -7,9 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TFHpple.h"
-#import "TFHppleElement.h"
-#import "XPathQuery.h"
 #import "NMC_Defines.h"
 
 @interface NetworkAPI : NSObject

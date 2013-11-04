@@ -49,19 +49,19 @@
 - (void)requestDetailView
 {
     ListInfoData* info = (ListInfoData*)self.parameter;
-    NSString* urlString = info.url;
-    NSDictionary* dic = @{URL_DETAIL:urlString};
+    NSString* urlString = [NSString stringWithFormat:@"%@%@", URL_DETAIL, info.url];
+    NSDictionary* dic = @{KEY_DETAIL_VIEW_URL:urlString};
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [NetworkAPI requestBoardDetail:dic type:BoardTypeGeneral success:^(NSDictionary *dic) {
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        int state = [[dic objectForKey:STATE]intValue];
+        int state = [[dic objectForKey:KEY_STATE]intValue];
         
         if (state == RESPONSE_SUCCESS) {
-            DetailInfoData* info = [dic objectForKey:DETAIL_INFO];
+            DetailInfoData* info = [dic objectForKey:KEY_DETAIL_INFO];
         } else if (state == RESPONSE_FAIL) {
-            NSString* msg = [dic objectForKey:MESSAGE];
+            NSString* msg = [dic objectForKey:KEY_MESSAGE];
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
                                                            message:msg
                                                           delegate:nil

@@ -104,13 +104,13 @@
     NSString* nm_id = self.tfLoginId.text;
     NSString* passwd = self.tfLoginPw.text;
     
-    NSDictionary* param = @{IMAGE1_Y:@"2", IMAGE1_X:@"2", PASSWD:passwd, NM_ID:nm_id};
+    NSDictionary* param = @{KEY_IMAGE1_Y:@"2", KEY_IMAGE1_X:@"2", KEY_PASSWD:passwd, KEY_NM_ID:nm_id};
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [NetworkAPI requestLogin:param success:^(NSDictionary *dic) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        int state = [[dic objectForKey:STATE]intValue];
+        int state = [[dic objectForKey:KEY_STATE]intValue];
         
         if (state == RESPONSE_SUCCESS) {
             [self dismissViewControllerAnimated:YES completion:^{
@@ -119,7 +119,7 @@
                 }
             }];
         } else if (state == RESPONSE_FAIL) {
-            NSString* msg = [dic objectForKey:MESSAGE];
+            NSString* msg = [dic objectForKey:KEY_MESSAGE];
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
                                                            message:msg
                                                           delegate:nil

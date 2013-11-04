@@ -109,19 +109,19 @@
 
 - (void)dismissLoginViewController
 {
-    NSDictionary* dic = @{BOARD: @"popbbs3"};
+    NSDictionary* dic = @{KEY_BOARD: @"popbbs3"};
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [NetworkAPI requestBoardList:dic type:BoardTypeGeneral success:^(NSDictionary *dic) {
         
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     
-        int state = [[dic objectForKey:STATE]intValue];
+        int state = [[dic objectForKey:KEY_STATE]intValue];
         
         if (state == RESPONSE_SUCCESS) {
-            self.arrList = [dic objectForKey:LIST];
+            self.arrList = [dic objectForKey:KEY_LIST];
             [self.tableView reloadData];
         } else if (state == RESPONSE_FAIL) {
-            NSString* msg = [dic objectForKey:MESSAGE];
+            NSString* msg = [dic objectForKey:KEY_MESSAGE];
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
                                                            message:msg
                                                           delegate:nil

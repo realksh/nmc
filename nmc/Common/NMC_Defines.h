@@ -35,25 +35,25 @@ typedef enum {
 
 #define URL_LOGIN                           @"http://nikemania.com/members/login.php"
 #define URL_LIST                            @"http://nikemania.com/bbs/bbs_list.php"
-#define URL_DETAIL                          @"http://nikemania.com/bbs/bbs_list.php"
+#define URL_DETAIL                          @"http://nikemania.com/bbs/"
 
 
 #pragma mark - Request Param
 
-#define NM_ID                               @"nm_id"
-#define PASSWD                              @"passwd"
-#define IMAGE1_X                            @"image1.x"
-#define IMAGE1_Y                            @"image1.y"
-#define BOARD                               @"bbs"
-#define NUMBER_OF_PAGE                      @"page"
-#define DETAIL_VIEW_URL                          @"detailViewUrl"
+#define KEY_NM_ID                               @"nm_id"
+#define KEY_PASSWD                              @"passwd"
+#define KEY_IMAGE1_X                            @"image1.x"
+#define KEY_IMAGE1_Y                            @"image1.y"
+#define KEY_BOARD                               @"bbs"
+#define KEY_NUMBER_OF_PAGE                      @"page"
+#define KEY_DETAIL_VIEW_URL                     @"detailViewUrl"
 
 
 #pragma mark - Response Param
 
-#define STATE                               @"state"
-#define MESSAGE                             @"msg"
-#define LIST                                @"list"
-#define DETAIL_INFO                         @"detailInfo"
+#define KEY_STATE                               @"state"
+#define KEY_MESSAGE                             @"msg"
+#define KEY_LIST                                @"list"
+#define KEY_DETAIL_INFO                         @"detailInfo"
 
 #endif
