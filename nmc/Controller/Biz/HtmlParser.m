@@ -51,6 +51,10 @@
         NSArray* arrUrl         = [titleElement searchWithXPathQuery:@"//tr//td[4]//a"];
         NSArray* arrNickname    = [titleElement searchWithXPathQuery:@"//*[@id=\"tid\"]/font/text()"];
         
+        if (0 == arrTitle.count || 0 == arrDate.count || 0 == arrHits.count || 0 == arrUrl.count) {
+            continue;
+        }
+        
         if (0 < [arrNickname count]) {
             // nickname
             // string, html 분기 필요.

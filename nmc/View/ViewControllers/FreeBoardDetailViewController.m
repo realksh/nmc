@@ -45,7 +45,9 @@
 
 - (void)initView
 {
+    ListInfoData* info = (ListInfoData*)self.parameter;
     
+    [self.navigationItem setTitle:info.title];
 }
 
 - (void)refreshScreen
