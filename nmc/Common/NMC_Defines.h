@@ -61,4 +61,9 @@ typedef enum {
 #define KEY_LIST                                @"list"
 #define KEY_DETAIL_INFO                         @"detailInfo"
 
+
+#pragma mark - Color
+
+#define COLOR_NMC_SKY           [UIColor colorWithRed:153.0f/255.0f green:204.0f/255.0f blue:251.0f/255.0f alpha:1]
+
 #endif

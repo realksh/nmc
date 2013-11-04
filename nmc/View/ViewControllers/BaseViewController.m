@@ -27,6 +27,9 @@
 {
     [super viewDidLoad];
 	
+    [self.navigationController.navigationBar setBackgroundColor:COLOR_NMC_SKY];
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+    
 	if ([self.navigationController.parentViewController respondsToSelector:@selector(revealGesture:)] && [self.navigationController.parentViewController respondsToSelector:@selector(revealToggle:)])
 	{
 		UIPanGestureRecognizer *navigationBarPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self.navigationController.parentViewController action:@selector(revealGesture:)];
