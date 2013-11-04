@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NMC_Defines.h"
+#import "nmc_defines.h"
 
 @interface NetworkAPI : NSObject
 

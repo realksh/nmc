@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ZUUIRevealController.h"
-#import "NMC_Defines.h"
+#import "nmc_defines.h"
 #import "MBProgressHUD.h"
 #import "NetworkAPI.h"
 
