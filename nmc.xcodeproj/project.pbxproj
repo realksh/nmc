@@ -113,6 +113,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E0DCBFB182811D10098666F /* nmc_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nmc_defines.h; sourceTree = "<group>"; };
 		1E33673218162F2F00C64011 /* nmc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nmc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E33673518162F2F00C64011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1E33673718162F2F00C64011 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -235,6 +236,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E0DCBFA182811D10098666F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1E0DCBFB182811D10098666F /* nmc_defines.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		1E33672918162F2E00C64011 = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +280,7 @@
 			children = (
 				1E33674418162F2F00C64011 /* AppDelegate.h */,
 				1E33674518162F2F00C64011 /* AppDelegate.m */,
+				1E0DCBFA182811D10098666F /* Common */,
 				1EC88E58181F9FF000A62B7A /* Controller */,
 				1EC88E2D181F9FA500A62B7A /* Model */,
 				1EC88E2E181F9FA500A62B7A /* View */,
