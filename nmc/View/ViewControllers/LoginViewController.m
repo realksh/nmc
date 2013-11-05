@@ -63,7 +63,7 @@
 - (BOOL)isInputSuccess
 {
     if (1 > self.tfLoginId.text.length) {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
                                                        message:@"empty id"
                                                       delegate:nil
                                              cancelButtonTitle:@"확인"
@@ -72,7 +72,7 @@
         [alert show];
         return NO;
     } else if (1 > self.tfLoginPw.text.length) {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
                                                        message:@"empty pw"
                                                       delegate:nil
                                              cancelButtonTitle:@"확인"
@@ -110,17 +110,17 @@
     [NetworkAPI requestLogin:param success:^(NSDictionary *dic) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        int state = [[dic objectForKey:KEY_STATE]intValue];
+        NSString* state = [dic objectForKey:KEY_STATE];
         
-        if (state == RESPONSE_SUCCESS) {
+        if ([state isEqualToString:RESPONSE_SUCCESS]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 if ([self.delegate respondsToSelector:@selector(dismissLoginViewController)]) {
                     [self.delegate dismissLoginViewController];
                 }
             }];
-        } else if (state == RESPONSE_FAIL) {
-            NSString* msg = [dic objectForKey:KEY_MESSAGE];
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
+        } else if ([state isEqualToString:RESPONSE_FAIL]) {
+            NSString* msg = [dic objectForKey:KEY_MSG];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
                                                            message:msg
                                                           delegate:nil
                                                  cancelButtonTitle:@"확인"

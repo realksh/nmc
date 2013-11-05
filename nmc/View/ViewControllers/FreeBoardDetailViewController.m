@@ -11,9 +11,16 @@
 #import "ReplyInfoData.h"
 #import "ListInfoData.h"
 
-@interface FreeBoardDetailViewController () <UIWebViewDelegate>
+@interface FreeBoardDetailViewController () <UIWebViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) DetailInfoData* detailInfo;
+@property (strong, nonatomic) IBOutlet UILabel *lbNickname;
+@property (strong, nonatomic) IBOutlet UIImageView *ivNickName;
+@property (strong, nonatomic) IBOutlet UILabel *lbTitle;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIView *vTopInfo;
+@property (strong, nonatomic) IBOutlet UILabel *lbDate;
+@property (strong, nonatomic) IBOutlet UILabel *lbHits;
 
 @end
 
@@ -31,8 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initView];
-    [self requestDetailView];
+    [self initProcess];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,10 +49,20 @@
 
 #pragma mark - Private
 
-- (void)initView
+- (void)initProcess
 {
+    [self.navigationItem setTitle:@"나매 일반 게시판"];
+ 
     ListInfoData* info = (ListInfoData*)self.parameter;
-    [self.navigationItem setTitle:info.title];
+    
+    [self.lbTitle setText:info.title];
+    [self.lbNickname setText:info.nickname];
+    [self.lbDate setText:info.date];
+    [self.lbHits setText:[NSString stringWithFormat:@"조회 %@", info.hitsCount]];
+    
+    self.webView.scrollView.delegate = self;
+//    [self.webView.scrollView setScrollEnabled:NO];
+    [self requestDetailView];
 }
 
 - (void)refreshScreen
@@ -65,14 +81,14 @@
     [NetworkAPI requestBoardDetail:dic type:BoardTypeGeneral success:^(NSDictionary *dic) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        int state = [[dic objectForKey:KEY_STATE]intValue];
+        NSString* state = [dic objectForKey:KEY_STATE];
         
-        if (state == RESPONSE_SUCCESS) {
+        if ([state isEqualToString:RESPONSE_SUCCESS]) {
             self.detailInfo = [dic objectForKey:KEY_DETAIL_INFO];
             [self refreshScreen];
-        } else if (state == RESPONSE_FAIL) {
-            NSString* msg = [dic objectForKey:KEY_MESSAGE];
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
+        } else if ([state isEqualToString:RESPONSE_FAIL]) {
+            NSString* msg = [dic objectForKey:KEY_MSG];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
                                                            message:msg
                                                           delegate:nil
                                                  cancelButtonTitle:@"확인"
@@ -83,8 +99,8 @@
     } failure:^(NSError* error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
-                                                       message:@"로그인에 실패하였습니다.\n잠시 후 다시 이용해주세요."
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
+                                                       message:kStrAlertResponseFail
                                                       delegate:nil
                                              cancelButtonTitle:@"확인"
                                              otherButtonTitles: nil,
@@ -106,8 +122,21 @@
             return NO;
         }
     }
-    
     return YES;
+}
+
+#pragma mark - UIScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    
+    if (self.vTopInfo.frame.size.height < offsetY) {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.vTopInfo setFrame:CGRectMake(self.vTopInfo.frame.origin.x, -(self.vTopInfo.frame.size.height), self.vTopInfo.frame.size.width, self.vTopInfo.frame.size.height)];
+            [self.webView setFrame:CGRectMake(self.webView.frame.origin.x, self.webView.frame.origin.y - self.vTopInfo.frame.size.height, self.webView.frame.size.width, self.webView.frame.size.height + self.vTopInfo.frame.size.height)];
+        }];
+    }
 }
 
 @end

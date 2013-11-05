@@ -17,6 +17,6 @@
 @property (nonatomic, strong) NSString* numberOfReply;
 @property (nonatomic, strong) NSString* platform;
 @property (nonatomic, strong) NSString* url;
-@property (nonatomic, strong) NSString* hits;
+@property (nonatomic, strong) NSString* hitsCount;
 
 @end

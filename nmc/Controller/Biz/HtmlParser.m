@@ -77,7 +77,7 @@
         listData.title = title;
         listData.nickname = nickname;
         listData.date = date;
-        listData.hits = hits;
+        listData.hitsCount = hits;
         listData.url = url;
         
         [arrList addObject:listData];
@@ -95,6 +95,7 @@
     
     if (0 < arrBody.count) {
         body  = HTML_BODY_SKIN([[arrBody objectAtIndex:0]raw]);
+        NSLog(@"body :\n%@",body);
     }
 
 //    NSString* title = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"con_head1\"]/strong/font[2]/text()"]objectAtIndex:0]content];

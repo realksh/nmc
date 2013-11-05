@@ -12,6 +12,8 @@
 #import "MBProgressHUD.h"
 #import "NetworkAPI.h"
 
+#define TAG_FOOTER_INDICATOR_VIEW         1000
+
 @interface BaseViewController : UIViewController
 
 @property (strong, nonatomic) NSObject* parameter;

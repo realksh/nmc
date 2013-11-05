@@ -9,10 +9,9 @@
 #import "FreeBoardListViewController.h"
 #import "LoginViewController.h"
 #import "FreeBoardDetailViewController.h"
-
 #import "BoardCell.h"
-
 #import "ListInfoData.h"
+#import "UIAlertView+BlockExtensions.h"
 
 @interface FreeBoardListViewController () <UITableViewDataSource, UITableViewDelegate, LoginViewDelegate>
 
@@ -46,7 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initView];
+    [self initProcess];
     [self addRevealLeftNavigationBarItem];
 }
 
@@ -58,10 +57,11 @@
 
 #pragma mark - Private
 
-- (void)initView
+- (void)initProcess
 {
     self.title = @"Free";
     
+    self.arrList = [NSMutableArray array];
     [self addRefreshControl];
     
     if (![self isSavedLoginId] && ![self isSavedLoginPw]) {
@@ -102,36 +102,44 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self hideRefreshControl];
         
-        int state = [[dic objectForKey:KEY_STATE]intValue];
+        NSString* state = [dic objectForKey:KEY_STATE];
         
-        if (state == RESPONSE_SUCCESS) {
+        if ([state isEqualToString:RESPONSE_SUCCESS]) {
             NSArray* array = [dic objectForKey:KEY_LIST];
-            
-            if (!self.arrList) {
-                self.arrList = [NSMutableArray array];
-            }
             
             for (ListInfoData* info in array) {
                 [self.arrList addObject:info];
             }
             
             [self.tableView reloadData];
-        } else if (state == RESPONSE_FAIL) {
-            NSString* msg = [dic objectForKey:KEY_MESSAGE];
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
+        } else if ([state isEqualToString:RESPONSE_FAIL]) {
+            NSString* msg = [dic objectForKey:KEY_MSG];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
                                                            message:msg
                                                           delegate:nil
                                                  cancelButtonTitle:@"확인"
                                                  otherButtonTitles: nil,
                                   nil];
             [alert show];
+        } else if ([state isEqualToString:RESPONSE_NOT_LOGIN]) {
+            NSString* msg = [dic objectForKey:KEY_MSG];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
+                                                           message:msg
+                                                   completionBlock:^(NSUInteger buttonIndex, UIAlertView *alertView) {
+                                                       LoginViewController* vc = [[LoginViewController alloc]init];
+                                                       vc.delegate = self;
+                                                       [self presentViewController:vc animated:YES completion:^{
+                                                       }];
+                                                   }
+                                                 cancelButtonTitle:@"확인"
+                                                 otherButtonTitles:nil];
+            [alert show];
         }
     } failure:^(NSError* error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self hideRefreshControl];
-        
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"NMC"
-                                                       message:@"로그인에 실패하였습니다.\n잠시 후 다시 이용해주세요."
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:kStrAlertTitle
+                                                       message:kStrAlertResponseFail
                                                       delegate:nil
                                              cancelButtonTitle:@"확인"
                                              otherButtonTitles: nil,

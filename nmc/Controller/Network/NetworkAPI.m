@@ -27,8 +27,6 @@
     [manager POST:urlString
        parameters:param
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"Success :\n%@", [operation responseString]);
-              
               NSString* responseString = [operation responseString];
               NSRange range = [responseString rangeOfString:@"script'>alert('"];
               NSDictionary* dic = nil;
@@ -38,14 +36,13 @@
                   NSRange lastRange = [msg rangeOfString:@"');"];
                   msg = [msg substringToIndex:lastRange.location];
                   dic = @{KEY_STATE: @"400",
-                          KEY_MESSAGE: msg};
+                          KEY_MSG: msg};
               } else if ([@"<meta http-equiv='Refresh' content='0; URL=../index.html'>" isEqualToString:responseString]) {
                   dic = @{KEY_STATE: @"200"};
               }
               
               success(dic);
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Fail :\n%@", error);
               failure(error);
           }];
 }
@@ -63,7 +60,6 @@
     [manager GET:urlString
       parameters:param
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             NSLog(@"Success :\n%@", [operation responseString]);
              
              NSString* responseString = [operation responseString];
              NSRange range = [responseString rangeOfString:@"script'>alert('"];
@@ -73,28 +69,32 @@
                  NSString* msg = [responseString substringFromIndex:range.location+@"script'>alert('".length];
                  NSRange lastRange = [msg rangeOfString:@"');"];
                  msg = [msg substringToIndex:lastRange.location];
-                 dic = @{KEY_STATE: @"400",
-                         KEY_MESSAGE: msg};
-             } else if ([responseString rangeOfString:@"table class=\"bbslist\""].location != NSNotFound) {
-                 // 성공
-                 NSMutableArray* arrList = nil;
-                 
-                 switch (type) {
-                     case BoardTypeGeneral: {
-                         arrList = [HtmlParser parseFreeBoardList:responseString];
-                         break;
+                 dic = @{KEY_STATE: RESPONSE_FAIL,
+                         KEY_MSG: msg};
+             } else {
+                 if ([responseString rangeOfString:@"table class=\"bbslist\""].location != NSNotFound) {
+                     // 성공
+                     NSMutableArray* arrList = nil;
+                     
+                     switch (type) {
+                         case BoardTypeGeneral: {
+                             arrList = [HtmlParser parseFreeBoardList:responseString];
+                             break;
+                         }
+                         default:
+                             break;
                      }
-                     default:
-                         break;
+                     dic = @{KEY_STATE: RESPONSE_SUCCESS,
+                             KEY_LIST: arrList};
+                 } else if ([responseString rangeOfString:@"<meta http-equiv='Refresh' content='0 URL=../index.html'>"].location != NSNotFound) {
+                     dic = @{KEY_STATE: RESPONSE_NOT_LOGIN,
+                             KEY_MSG: kStrAlertMsgNotLogin};
                  }
-                 dic = @{KEY_STATE: @"200",
-                         KEY_LIST: arrList};
              }
              
              success(dic);
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Fail :\n%@", error);
              failure(error);
          }];
 }
@@ -112,7 +112,6 @@
     [manager GET:urlString
       parameters:param
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             NSLog(@"Success :\n%@", [operation responseString]);
              
              NSString* responseString = [operation responseString];
              
@@ -128,7 +127,6 @@
              success(dic);
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Fail :\n%@", error);
              failure(error);
          }];
 }

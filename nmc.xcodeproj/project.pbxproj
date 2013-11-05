@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0DCC1F1828F6D10098666F /* UIActionSheet+BlockExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DCC1C1828F6D10098666F /* UIActionSheet+BlockExtensions.m */; };
+		1E0DCC201828F6D10098666F /* UIActionSheet+BlockExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DCC1C1828F6D10098666F /* UIActionSheet+BlockExtensions.m */; };
+		1E0DCC211828F6D10098666F /* UIAlertView+BlockExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DCC1E1828F6D10098666F /* UIAlertView+BlockExtensions.m */; };
+		1E0DCC221828F6D10098666F /* UIAlertView+BlockExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DCC1E1828F6D10098666F /* UIAlertView+BlockExtensions.m */; };
 		1E33673618162F2F00C64011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E33673518162F2F00C64011 /* Foundation.framework */; };
 		1E33673818162F2F00C64011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E33673718162F2F00C64011 /* CoreGraphics.framework */; };
 		1E33673A18162F2F00C64011 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E33673918162F2F00C64011 /* UIKit.framework */; };
@@ -114,6 +118,10 @@
 
 /* Begin PBXFileReference section */
 		1E0DCBFB182811D10098666F /* nmc_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nmc_defines.h; sourceTree = "<group>"; };
+		1E0DCC1B1828F6D10098666F /* UIActionSheet+BlockExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+BlockExtensions.h"; sourceTree = "<group>"; };
+		1E0DCC1C1828F6D10098666F /* UIActionSheet+BlockExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+BlockExtensions.m"; sourceTree = "<group>"; };
+		1E0DCC1D1828F6D10098666F /* UIAlertView+BlockExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+BlockExtensions.h"; sourceTree = "<group>"; };
+		1E0DCC1E1828F6D10098666F /* UIAlertView+BlockExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+BlockExtensions.m"; sourceTree = "<group>"; };
 		1E33673218162F2F00C64011 /* nmc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nmc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E33673518162F2F00C64011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1E33673718162F2F00C64011 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -240,6 +248,10 @@
 			isa = PBXGroup;
 			children = (
 				1E0DCBFB182811D10098666F /* nmc_defines.h */,
+				1E0DCC1B1828F6D10098666F /* UIActionSheet+BlockExtensions.h */,
+				1E0DCC1C1828F6D10098666F /* UIActionSheet+BlockExtensions.m */,
+				1E0DCC1D1828F6D10098666F /* UIAlertView+BlockExtensions.h */,
+				1E0DCC1E1828F6D10098666F /* UIAlertView+BlockExtensions.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -638,6 +650,7 @@
 				1E33681A1817AB3800C64011 /* UIProgressView+AFNetworking.m in Sources */,
 				1E3368021817AB3800C64011 /* AFHTTPSessionManager.m in Sources */,
 				1EC88E41181F9FA500A62B7A /* BaseViewController.m in Sources */,
+				1E0DCC1F1828F6D10098666F /* UIActionSheet+BlockExtensions.m in Sources */,
 				1E33680A1817AB3800C64011 /* AFURLRequestSerialization.m in Sources */,
 				1E33674218162F2F00C64011 /* main.m in Sources */,
 				1EC88E66181FAC7800A62B7A /* FreeBoardDetailViewController.m in Sources */,
@@ -662,6 +675,7 @@
 				1EC88E4F181F9FA500A62B7A /* RearMenuCell.m in Sources */,
 				1E33680C1817AB3800C64011 /* AFURLResponseSerialization.m in Sources */,
 				1E3367FE1817AB3800C64011 /* AFHTTPRequestOperation.m in Sources */,
+				1E0DCC211828F6D10098666F /* UIAlertView+BlockExtensions.m in Sources */,
 				1E33683E1818B52300C64011 /* TFHpple.m in Sources */,
 				1E365FE2182795A800837B57 /* NetworkAPI.m in Sources */,
 			);
@@ -684,6 +698,7 @@
 				1EC88E75181FD50000A62B7A /* ReplyInfoData.m in Sources */,
 				1EC88E61181FA03200A62B7A /* ListInfoData.m in Sources */,
 				1E33680F1817AB3800C64011 /* AFURLSessionManager.m in Sources */,
+				1E0DCC201828F6D10098666F /* UIActionSheet+BlockExtensions.m in Sources */,
 				1E3368681818DF1D00C64011 /* MBProgressHUD.m in Sources */,
 				1E3368211817AB3800C64011 /* ZUUIRevealController.m in Sources */,
 				1EC88E71181FD3A900A62B7A /* DetailInfoData.m in Sources */,
@@ -695,6 +710,7 @@
 				1E3368191817AB3800C64011 /* UIImageView+AFNetworking.m in Sources */,
 				1E3368431818B52300C64011 /* XPathQuery.m in Sources */,
 				1EC88E54181F9FA500A62B7A /* RearMenuViewController.m in Sources */,
+				1E0DCC221828F6D10098666F /* UIAlertView+BlockExtensions.m in Sources */,
 				1EC88E48181F9FA500A62B7A /* FreeBoardListViewController.m in Sources */,
 				1E3368151817AB3800C64011 /* UIAlertView+AFNetworking.m in Sources */,
 				1E3368011817AB3800C64011 /* AFHTTPRequestOperationManager.m in Sources */,
