@@ -49,10 +49,10 @@
 - (void)setBody:(NSString *)body
 {
     [self.tvBody setText:body];
-    CGSize size = [self.tvBody sizeThatFits:CGSizeMake(self.tvBody.frame.size.width, 1000)];
-    [self.tvBody setFrame:CGRectMake(self.tvBody.frame.origin.x, self.tvBody.frame.origin.y, self.tvBody.frame.size.width, size.height)];
-    [self.vRoundBox setFrame:CGRectMake(self.vRoundBox.frame.origin.x, self.vRoundBox.frame.origin.y, self.vRoundBox.frame.size.width, size.height + 25)];
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.vRoundBox.frame.size.height + 10)];
+    CGSize size = [self.tvBody sizeThatFits:CGSizeMake(REPLY_CELL_BODY_WIDTH, 0)];
+    [self.tvBody setFrame:CGRectMake(self.tvBody.frame.origin.x, self.tvBody.frame.origin.y, self.tvBody.frame.size.width, size.height + 5)];
+    [self.vRoundBox setFrame:CGRectMake(self.vRoundBox.frame.origin.x, self.vRoundBox.frame.origin.y, self.vRoundBox.frame.size.width, self.tvBody.frame.size.height + self.tvBody.frame.origin.y)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.vRoundBox.frame.size.height + self.vRoundBox.frame.origin.y + 5)];
 }
 
 @end
