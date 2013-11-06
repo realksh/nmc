@@ -67,12 +67,13 @@
         hits        = [(TFHppleElement*)[arrHits objectAtIndex:0]content];
         url         = [(TFHppleElement*)[[arrUrl objectAtIndex:0]attributes]objectForKey:@"href"];
         
+        /*
         NSLog(@"title : %@", title);
         NSLog(@"date : %@", date);
         NSLog(@"hits : %@", hits);
         NSLog(@"url : %@", url);
         NSLog(@"nickName : %@", nickname);
-        
+        */
         ListInfoData* listData = [[ListInfoData alloc]init];
         listData.title = title;
         listData.nickname = nickname;
@@ -95,6 +96,9 @@
     
     if (0 < arrBody.count) {
         body  = HTML_BODY_SKIN([[arrBody objectAtIndex:0]raw]);
+        body = [body stringByReplacingOccurrencesOfString:@"<img " withString:@"<img width=\"300px\" "];
+        
+        
         NSLog(@"body :\n%@",body);
     }
 
@@ -104,16 +108,31 @@
 //    NSString* nm_id = [[[xpathParser searchWithXPathQuery:@"//*[@id=\"fid\"]/text()"]objectAtIndex:0]content];
     
     // reply
-    /*
-    NSArray* arrReplyElements = [xpathParser searchWithXPathQuery:@"//table[@class='reply_box']"];
+    
+    NSArray* arrReplyElements = [xpathParser searchWithXPathQuery:@"//*[@id=\"rp_right\"]"];
     
     NSMutableArray* arrReplyList = [NSMutableArray array];
     
-    for (TFHppleElement* element in arrReplyElements) {
+    for (int i = 0 ; i < arrReplyElements.count - 1 ; i++) {
+        
+        TFHppleElement* element = [arrReplyElements objectAtIndex:i];
+        
+        NSArray* arrNickname = [element searchWithXPathQuery:@"//*[@id=\"rp_right\"]/strong/font[1]/font"];
+        
         NSString* replyBody     = @"";
         NSString* replyNick     = @"";
         NSString* replyNm_id    = @"";
         NSString* replyDate     = @"";
+        
+        if (0 < arrNickname.count) {
+            replyNick     = [[[element searchWithXPathQuery:@"//*[@id=\"rp_right\"]/strong/font[1]/font/text()"]objectAtIndex:0]content];
+        }
+        replyBody     = [[[element searchWithXPathQuery:@"//*[@id=\"rp_right\"]/font/text()"]objectAtIndex:0]content];
+        if ([replyBody hasPrefix:@"  "]) {
+            replyBody = [replyBody substringFromIndex:2];
+        }
+//        replyNm_id    = [[[element searchWithXPathQuery:@""]objectAtIndex:0]content];
+//        replyDate     = [[[element searchWithXPathQuery:@""]objectAtIndex:0]content];
         
         ReplyInfoData* replyInfo = [[ReplyInfoData alloc]init];
         
@@ -124,7 +143,7 @@
         
         [arrReplyList addObject:replyInfo];
     }
-    */
+    
     DetailInfoData* info = [[DetailInfoData alloc]init];
     
     info.body = body;
@@ -132,7 +151,7 @@
 //    info.date = date;
 //    info.num = num;
 //    info.nm_id = nm_id;
-//    info.replyList = arrReplyList;
+    info.replyList = arrReplyList;
     
     return info;
 }

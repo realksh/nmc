@@ -11,6 +11,6 @@
 
 @interface FreeBoardDetailViewController : BaseViewController
 
-@property (strong, nonatomic) IBOutlet UIWebView *webView;
+
 
 @end

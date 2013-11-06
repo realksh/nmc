@@ -10,10 +10,15 @@
 #import "DetailInfoData.h"
 #import "ReplyInfoData.h"
 #import "ListInfoData.h"
+#import "ReplyCell.h"
 
-@interface FreeBoardDetailViewController () <UIWebViewDelegate, UIScrollViewDelegate>
+#define TAG_DETAIL_BODY_WEBVIEW     1000
 
-@property (nonatomic, strong) DetailInfoData* detailInfo;
+@interface FreeBoardDetailViewController () <UIWebViewDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) DetailInfoData* detailInfo;
 @property (strong, nonatomic) IBOutlet UILabel *lbNickname;
 @property (strong, nonatomic) IBOutlet UIImageView *ivNickName;
 @property (strong, nonatomic) IBOutlet UILabel *lbTitle;
@@ -60,14 +65,36 @@
     [self.lbDate setText:info.date];
     [self.lbHits setText:[NSString stringWithFormat:@"조회 %@", info.hitsCount]];
     
-    self.webView.scrollView.delegate = self;
-//    [self.webView.scrollView setScrollEnabled:NO];
+//    self.webView.scrollView.delegate = self;
+    [self.webView.scrollView setScrollEnabled:NO];
+    self.webView.tag = TAG_DETAIL_BODY_WEBVIEW;
     [self requestDetailView];
 }
 
 - (void)refreshScreen
 {
-    [self.webView loadHTMLString:self.detailInfo.body baseURL:nil];
+    NSString* body = [NSString stringWithFormat:@"%@", self.detailInfo.body];
+    [self.tableView reloadData];
+    [self.webView loadHTMLString:body baseURL:nil];
+}
+
+- (void)reframeScreen
+{
+    [self.tableView setFrame:CGRectMake(0,
+                                        self.webView.frame.origin.y + self.webView.frame.size.height + 20,
+                                        self.tableView.frame.size.width,
+                                        self.tableView.contentSize.height)];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.tableView.frame.origin.y + self.tableView.frame.size.height)];
+}
+
+- (UIWebView*)cellBodyWebView:(NSString*)htmlString
+{
+    CGRect rect = CGRectMake(20, 20, 280, 0);
+    UIWebView* webView = [[UIWebView alloc]initWithFrame:rect];
+    webView.delegate = self;
+    [webView loadHTMLString:htmlString baseURL:nil];
+    return webView;
 }
 
 - (void)requestDetailView
@@ -125,18 +152,81 @@
     return YES;
 }
 
-#pragma mark - UIScrollView Delegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    CGFloat offsetY = scrollView.contentOffset.y;
+    CGRect frame = webView.frame;
+    frame.size.height = 1;
+    [webView setFrame:frame];
+    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
+    frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, fittingSize.height);
     
-    if (self.vTopInfo.frame.size.height < offsetY) {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.vTopInfo setFrame:CGRectMake(self.vTopInfo.frame.origin.x, -(self.vTopInfo.frame.size.height), self.vTopInfo.frame.size.width, self.vTopInfo.frame.size.height)];
-            [self.webView setFrame:CGRectMake(self.webView.frame.origin.x, self.webView.frame.origin.y - self.vTopInfo.frame.size.height, self.webView.frame.size.width, self.webView.frame.size.height + self.vTopInfo.frame.size.height)];
-        }];
+    [webView setFrame:frame];
+    
+    if (TAG_DETAIL_BODY_WEBVIEW == webView.tag) {
+        [self reframeScreen];
     }
+    
+//    NSLog(@"frame: %f, %f, %f, %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (!self.detailInfo) {
+        return 0;
+    }
+    
+    NSInteger count = self.detailInfo.replyList.count;
+    return count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"ReplyCell";
+    
+    ReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle]loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
+        [cell.vRoundBox.layer setCornerRadius:10];
+    }
+
+    NSInteger row = indexPath.row;
+    
+    if (row >= self.detailInfo.replyList.count) {
+        return cell;
+    }
+    
+    ReplyInfoData* replyInfo = [self.detailInfo.replyList objectAtIndex:row];
+
+    NSString* body = replyInfo.body;
+    NSString* nickname = replyInfo.nickname;
+    
+    [cell setBody:body];
+    [cell.lbNickname setText:nickname];
+    
+    return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.detailInfo) {
+        return 0;
+    }
+    
+    ReplyInfoData* info = [self.detailInfo.replyList objectAtIndex:indexPath.row];
+    
+    UITextView* tv = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, REPLY_CELL_BODY_WIDTH, 1000)];
+    [tv setFont:[UIFont systemFontOfSize:13]];
+    [tv setText:info.body];
+    CGSize size = [tv sizeThatFits:CGSizeMake(REPLY_CELL_BODY_WIDTH, 1000)];
+    CGFloat height = 35 + size.height;
+    
+    NSLog(@"cell height = %.1f", height);
+    return height;
 }
 
 @end

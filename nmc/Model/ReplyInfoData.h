@@ -15,5 +15,5 @@
 @property (nonatomic, strong) NSString* date;
 @property (nonatomic, strong) NSString* body;
 @property (nonatomic, strong) NSString* profileImgUrl;
-
+@property (nonatomic, assign) CGFloat bodyHeight;
 @end

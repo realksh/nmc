@@ -10,4 +10,13 @@
 
 @implementation ReplyInfoData
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _bodyHeight = 0.0;
+    }
+    return self;
+}
+
 @end
