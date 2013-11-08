@@ -44,9 +44,13 @@
         NSString* hits      = @"";
         NSString* url       = @"";
         NSString* nickname  = @"";
+        NSString* replyCount = @"";
+        NSString* platform  = @"";
         
         NSArray* arrTitle       = [titleElement searchWithXPathQuery:@"//*[@id=\"tsub\"]/a/text()"];
         NSArray* arrDate        = [NSArray arrayWithArray:[titleElement searchWithXPathQuery:@"//*[@id=\"tdate\"]/text()"]];
+        NSArray* arrReplyCount  = [titleElement searchWithXPathQuery:@"//*[@id=\"tsub\"]/a/font[contains(text(),'[ ')]/text()"];
+        NSArray* arrPlatform    = [titleElement searchWithXPathQuery:@"//*[@id=\"tsub\"]/a/font[contains(text(),'+ iOS')]/text()"];
         NSArray* arrHits        = [titleElement searchWithXPathQuery:@"//*[@id=\"thit\"]/text()"];
         NSArray* arrUrl         = [titleElement searchWithXPathQuery:@"//tr//td[4]//a"];
         NSArray* arrNickname    = [titleElement searchWithXPathQuery:@"//*[@id=\"tid\"]/font/text()"];
@@ -58,16 +62,26 @@
         if (0 < [arrNickname count]) {
             // nickname
             // string, html 분기 필요.
-            TFHppleElement* elementNick = [arrNickname objectAtIndex:0];
-            nickname =  [elementNick content];
+            // http://blog.naver.com/trick14/100151115968
+            TFHppleElement* element = [arrNickname objectAtIndex:0];
+            nickname =  [element content];
         }
         
+        if (0 < [arrReplyCount count]) {
+            TFHppleElement* element = [arrReplyCount objectAtIndex:0];
+            replyCount =  [element content];
+        }
+        if (0 < [arrPlatform count]) {
+            TFHppleElement* element = [arrPlatform objectAtIndex:0];
+            platform = [element content];
+        }
         title       = [(TFHppleElement*)[arrTitle objectAtIndex:0]content];
         date        = [[NSString alloc]initWithString:[(TFHppleElement*)[arrDate objectAtIndex:0]content]];
         hits        = [(TFHppleElement*)[arrHits objectAtIndex:0]content];
         url         = [(TFHppleElement*)[[arrUrl objectAtIndex:0]attributes]objectForKey:@"href"];
         
         /*
+        NSLog(@"reply count : %@", replyCount);
         NSLog(@"title : %@", title);
         NSLog(@"date : %@", date);
         NSLog(@"hits : %@", hits);
@@ -80,6 +94,7 @@
         listData.date = date;
         listData.hitsCount = hits;
         listData.url = url;
+        listData.numberOfReply = replyCount;
         
         [arrList addObject:listData];
     }

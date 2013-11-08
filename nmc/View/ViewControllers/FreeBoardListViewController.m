@@ -183,9 +183,11 @@
     
     NSString* title = listData.title;
     NSString* nickname = listData.nickname;
+    NSString* replyCount = listData.numberOfReply;
     
     [cell.labelTitle setText:title];
     [cell.labelName setText:nickname];
+    [cell.labelReplyCount setText:replyCount];
     
     if (row == self.arrList.count - 1) {
         self.currentPage++;
