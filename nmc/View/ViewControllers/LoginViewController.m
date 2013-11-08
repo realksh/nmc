@@ -9,11 +9,11 @@
 #import "LoginViewController.h"
 #import "FreeBoardListViewController.h"
 
-@interface LoginViewController () <UITextFieldDelegate>
+@interface LoginViewController ()
 
 @property (strong, nonatomic) IBOutlet UITextField *tfLoginId;
 @property (strong, nonatomic) IBOutlet UITextField *tfLoginPw;
-@property (strong, nonatomic) IBOutlet UIButton *btLogin;
+@property (strong, nonatomic) IBOutlet UIButton    *btLogin;
 
 @end
 
@@ -89,17 +89,9 @@
 
 - (IBAction)actionLogin:(id)sender
 {
-#if ENABLE_TEST
-
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-
-#else
-    
-//    if (![self isInputSuccess]) {
-//        return;
-//    }
+    if (![self isInputSuccess]) {
+        return;
+    }
     
     NSString* nm_id = self.tfLoginId.text;
     NSString* passwd = self.tfLoginPw.text;
@@ -131,11 +123,6 @@
     } failure:^(NSError* error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
-    
-#endif
 }
-
-#pragma mark - UITextField Delegate
-
 
 @end

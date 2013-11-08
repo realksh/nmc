@@ -28,7 +28,7 @@
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
-    UIColor* color = [UIColor blackColor];
+    UIColor* color = [UIColor darkTextColor];
     
     if (highlighted) {
         color = [UIColor whiteColor];

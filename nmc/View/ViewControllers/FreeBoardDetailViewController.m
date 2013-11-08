@@ -18,7 +18,6 @@
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) DetailInfoData* detailInfo;
 @property (strong, nonatomic) IBOutlet UILabel *lbNickname;
 @property (strong, nonatomic) IBOutlet UIImageView *ivNickName;
 @property (strong, nonatomic) IBOutlet UILabel *lbTitle;
@@ -26,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIView *vTopInfo;
 @property (strong, nonatomic) IBOutlet UILabel *lbDate;
 @property (strong, nonatomic) IBOutlet UILabel *lbHits;
+@property (strong, nonatomic) DetailInfoData* detailInfo;
 
 @end
 
@@ -64,8 +64,6 @@
     [self.lbNickname setText:info.nickname];
     [self.lbDate setText:info.date];
     [self.lbHits setText:[NSString stringWithFormat:@"조회 %@", info.hitsCount]];
-    
-//    self.webView.scrollView.delegate = self;
     [self.webView.scrollView setScrollEnabled:NO];
     self.webView.tag = TAG_DETAIL_BODY_WEBVIEW;
     [self requestDetailView];
@@ -86,15 +84,6 @@
                                         self.tableView.contentSize.height)];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.tableView.frame.origin.y + self.tableView.frame.size.height)];
-}
-
-- (UIWebView*)cellBodyWebView:(NSString*)htmlString
-{
-    CGRect rect = CGRectMake(20, 20, 280, 0);
-    UIWebView* webView = [[UIWebView alloc]initWithFrame:rect];
-    webView.delegate = self;
-    [webView loadHTMLString:htmlString baseURL:nil];
-    return webView;
 }
 
 - (void)requestDetailView
@@ -221,11 +210,11 @@
     
     UITextView* tv = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, REPLY_CELL_BODY_WIDTH, 1000)];
     [tv setFont:[UIFont systemFontOfSize:13]];
-    [tv setText:info.body];
-    CGSize size = [tv sizeThatFits:CGSizeMake(REPLY_CELL_BODY_WIDTH, 1000)];
-    CGFloat height = 35 + size.height;
-    
-    NSLog(@"cell height = %.1f", height);
+    NSString* body = [NSString stringWithFormat:@"%@  ", info.body];
+    [tv setText:body];
+    CGSize size = [tv sizeThatFits:CGSizeMake(REPLY_CELL_BODY_WIDTH, 0)];
+    CGFloat height = 31 + size.height;
+
     return height;
 }
 
