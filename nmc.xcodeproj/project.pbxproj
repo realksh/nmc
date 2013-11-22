@@ -108,6 +108,8 @@
 		1EC88E71181FD3A900A62B7A /* DetailInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC88E6F181FD3A900A62B7A /* DetailInfoData.m */; };
 		1EC88E74181FD50000A62B7A /* ReplyInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC88E73181FD50000A62B7A /* ReplyInfoData.m */; };
 		1EC88E75181FD50000A62B7A /* ReplyInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC88E73181FD50000A62B7A /* ReplyInfoData.m */; };
+		1ED94BC3183F5F2A001E367A /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED94BC2183F5F2A001E367A /* app_icon.png */; };
+		1ED94BC4183F5F2A001E367A /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED94BC2183F5F2A001E367A /* app_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +224,7 @@
 		1EC88E6F181FD3A900A62B7A /* DetailInfoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailInfoData.m; sourceTree = "<group>"; };
 		1EC88E72181FD50000A62B7A /* ReplyInfoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyInfoData.h; sourceTree = "<group>"; };
 		1EC88E73181FD50000A62B7A /* ReplyInfoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyInfoData.m; sourceTree = "<group>"; };
+		1ED94BC2183F5F2A001E367A /* app_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +353,7 @@
 		1E3367D21817A7BE00C64011 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				1ED94BC2183F5F2A001E367A /* app_icon.png */,
 			);
 			path = image;
 			sourceTree = "<group>";
@@ -614,6 +618,7 @@
 				1E33674818162F2F00C64011 /* Images.xcassets in Resources */,
 				1EC88E51181F9FA500A62B7A /* RearMenuCell.xib in Resources */,
 				1EC88E45181F9FA500A62B7A /* BoardCell.xib in Resources */,
+				1ED94BC3183F5F2A001E367A /* app_icon.png in Resources */,
 				1E7D1B80182A41D000B005FC /* ReplyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +633,7 @@
 				1EC88E4A181F9FA500A62B7A /* FreeBoardListViewController.xib in Resources */,
 				1EC88E52181F9FA500A62B7A /* RearMenuCell.xib in Resources */,
 				1EC88E56181F9FA500A62B7A /* RearMenuViewController.xib in Resources */,
+				1ED94BC4183F5F2A001E367A /* app_icon.png in Resources */,
 				1EC88E46181F9FA500A62B7A /* BoardCell.xib in Resources */,
 				1E33675918162F2F00C64011 /* InfoPlist.strings in Resources */,
 			);
